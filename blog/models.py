@@ -79,6 +79,9 @@ class BlogIndexPage(Page):
             else:
                 blogs = blogs.filter(author_id=author)
 
+        if request.GET.get('search'):
+            blogs = blogs.search(request.GET.get('search'))
+
         # Pagination
         page = request.GET.get('page')
         page_size = 10
@@ -216,6 +219,7 @@ class BlogPage(Page):
     )
 
     search_fields = Page.search_fields + (
+        index.FilterField('name'),
         index.SearchField('body'),
     )
     blog_categories = models.ManyToManyField(
