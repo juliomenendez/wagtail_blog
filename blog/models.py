@@ -30,6 +30,7 @@ def get_blog_context(context):
         owned_pages__content_type__model='blogpage'
     ).annotate(Count('owned_pages')).order_by('-owned_pages__count')
     context['all_categories'] = BlogCategory.objects.all()
+    context['all_tags'] = BlogTag.objects.all()
     context['root_categories'] = BlogCategory.objects.filter(
         parent=None,
     ).prefetch_related(
