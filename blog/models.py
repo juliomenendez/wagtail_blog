@@ -79,8 +79,10 @@ class BlogIndexPage(Page):
             else:
                 blogs = blogs.filter(author_id=author)
 
+        search = ''
         if request.GET.get('search'):
-            blogs = blogs.search(request.GET.get('search'))
+            search = request.GET.get('search')
+            blogs = blogs.search(search)
 
         # Pagination
         page = request.GET.get('page')
@@ -100,6 +102,7 @@ class BlogIndexPage(Page):
         context['blogs'] = blogs
         context['category'] = category
         context['tag'] = tag
+        context['search'] = search
         context['author'] = author
         context['COMMENTS_APP'] = COMMENTS_APP
         context = get_blog_context(context)
